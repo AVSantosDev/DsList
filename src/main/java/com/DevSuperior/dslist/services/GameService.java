@@ -16,7 +16,6 @@ public class GameService {
     @Autowired
     private GameRepository gameRepository;
 
-
     public List<GameMinDTO> findAll() { //depois deve mudar para GameMinDTO onde está Game somente na linha 19
         List<Game> result = gameRepository.findAll();
         List<GameMinDTO> gameMinDTOList = result.stream().map(x -> new GameMinDTO(x)).toList();
