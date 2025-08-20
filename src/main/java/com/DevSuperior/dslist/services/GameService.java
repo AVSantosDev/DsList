@@ -3,15 +3,14 @@ package com.DevSuperior.dslist.services;
 import com.DevSuperior.dslist.dto.GameDTO;
 import com.DevSuperior.dslist.dto.GameMinDTO;
 import com.DevSuperior.dslist.entities.Game;
+import com.DevSuperior.dslist.projection.GameMinProjection;
 import com.DevSuperior.dslist.repositories.GameRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 //service é responsável pela regra do negócio ela gerencia toda a aplicação
@@ -33,6 +32,14 @@ public class GameService {
     public GameDTO findById(Long id) {
         Game result = gameRepository.findById(id).get();
         return new GameDTO(result);
+
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> findByList(Long listId) {
+        List<GameMinProjection> result = gameRepository.searchByList(listId);
+        return result.stream().map(x -> new GameMinDTO(x)).toList();
 
     }
 
